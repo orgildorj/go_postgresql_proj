@@ -26,7 +26,7 @@ func main() {
 	go func() {
 		for {
 			scrape.ScrapeAusländerbehörde(today, "2025-05-01", telegram_ids, db)
-			time.Sleep(60 * time.Second)
+			time.Sleep(30 * time.Second)
 		}
 	}()
 
