@@ -5,6 +5,7 @@ import (
 	"go_backend/internal/scrape"
 	"go_backend/internal/sql_db"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -19,11 +20,12 @@ func main() {
 	defer db.Close()
 
 	today := string(time.Now().Format("2006-01-02"))
+	telegram_ids := strings.Split(os.Getenv("telegram_ids"), ",")
 	fmt.Println(today)
 
 	go func() {
 		for {
-			scrape.ScrapeAusländerbehörde(today, "2025-05-01", os.Getenv("telegram_id"), os.Getenv("telegram_api"), db)
+			scrape.ScrapeAusländerbehörde(today, "2025-05-01", telegram_ids, db)
 			time.Sleep(60 * time.Second)
 		}
 	}()
